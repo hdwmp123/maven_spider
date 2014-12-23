@@ -22,14 +22,21 @@ import com.king.util.GlobalContext;
 public class KKMHRun_Jsoup {
 	static Logger LOG = BeanUtail.getLOG(KKMHRun_Selenium.class);
 	public static void main(String[] args) {
-		try {
-			run();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Runnable run = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					runWeb();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		BeanUtail.runThread(run, "");
+			
 	}
 
-	private static void run() throws IOException {
+	private static void runWeb() throws IOException {
 		Document  driver = null;
 		int pageIndex = 1;
 		String url = "http://www.kuaikanmanhua.com/comics/%s";
@@ -42,11 +49,7 @@ public class KKMHRun_Jsoup {
 		//
 		String dirBase = GlobalContext.DIR_KUAI_KAN_MAN_HUA;
 		String tempDir = null;
-		boolean result ;
 		while (true) {
-			if(pageIndex>51){
-				break;
-			}
 			driver = Jsoup.connect(String.format(url, pageIndex)).timeout(3*1000).get();
 			pageIndex++;
 			//
@@ -59,8 +62,7 @@ public class KKMHRun_Jsoup {
 			LOG.info(date);
 			LOG.info(author);
 			tempDir = dirBase + BeanUtail.fixFileName(topic_name) + "/" + BeanUtail.fixFileName(comic_name) + "/";
-			result = BeanUtail.createDir(tempDir) ;
-			LOG.info(String.format("create dir:%s", result));
+			BeanUtail.createDir(tempDir) ;
 			//
 			Elements imgs = driver.select(".comic-content > img");
 			if (imgs == null) {
@@ -71,10 +73,8 @@ public class KKMHRun_Jsoup {
 			int index = 1;
 			for (Element img : imgs) {
 				imgUrl = img.attr("src");
-				LOG.info(imgUrl);
-				result = BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
-				LOG.info(String.format("save file:%s", result));
 			}
 			LOG.info("---------------------------------------");
 		}

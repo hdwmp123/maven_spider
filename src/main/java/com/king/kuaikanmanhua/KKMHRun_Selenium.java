@@ -22,12 +22,11 @@ import com.king.util.GlobalContext;
 public class KKMHRun_Selenium {
 	static Logger LOG = BeanUtail.getLOG(KKMHRun_Selenium.class);
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver",
-				GlobalContext.CHROME_DRIVER);
-		run();
+		System.setProperty("webdriver.chrome.driver",GlobalContext.CHROME_DRIVER);
+		runWeb();
 	}
 
-	private static void run() {
+	private static void runWeb() {
 		WebDriver driver = new ChromeDriver();
 		int pageIndex = 1;
 		String url = "http://www.kuaikanmanhua.com/comics/%s";
@@ -40,7 +39,6 @@ public class KKMHRun_Selenium {
 		//
 		String dirBase = GlobalContext.DIR_KUAI_KAN_MAN_HUA;
 		String tempDir = null;
-		boolean result ;
 		while (true) {
 			driver.get(String.format(url, pageIndex));
 			pageIndex++;
@@ -54,8 +52,7 @@ public class KKMHRun_Selenium {
 			LOG.info(date);
 			LOG.info(author);
 			tempDir = dirBase + BeanUtail.fixFileName(topic_name) + "/" + BeanUtail.fixFileName(comic_name) + "/";
-			result = BeanUtail.createDir(tempDir) ;
-			LOG.info(String.format("create dir:%s", result));
+			BeanUtail.createDir(tempDir) ;
 			//
 			List<WebElement> imgs = driver.findElements(By.cssSelector(".comic-content > img"));
 			if (imgs == null) {
@@ -66,10 +63,8 @@ public class KKMHRun_Selenium {
 			int index = 1;
 			for (WebElement img : imgs) {
 				imgUrl = img.getAttribute("src");
-				LOG.info(imgUrl);
-				result = BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
-				LOG.info(String.format("save file:%s", result));
 			}
 			LOG.info("---------------------------------------");
 		}

@@ -34,14 +34,12 @@ public class QiuShiBaiKe_Jsoup {
 		int pageIndex = 1;
 		String url = "http://www.qiushibaike.com/8hr/page/%s";
 		int divCount = 0;
-		String content = null;
 		String author = null;
 		String imgUrl = null;
 		//
 		String dirBase = GlobalContext.DIR_QIU_SHI_BAI_KE;
 		String tempDir = null;
-		
-		boolean result ;
+		int index = 0;
 		while (true) {
 			driver = Jsoup.connect(String.format(url, pageIndex)).timeout(3*1000).get();
 			pageIndex++;
@@ -52,18 +50,14 @@ public class QiuShiBaiKe_Jsoup {
 			}
 			divCount = divs.size();
 			LOG.info(String.format("笑话数量:%s", divCount));
-			int index = 1;
 			for (Element div : divs) {
 				//
 				author = div.select("div.author > a").get(1).text();
 				tempDir = dirBase + BeanUtail.fixFileName(author) + "/";
-				result = BeanUtail.createDir(tempDir) ;
-				LOG.info(String.format("create dir:%s", result));
+				BeanUtail.createDir(tempDir) ;
 				imgUrl = div.select("img").get(1).attr("src");
-				LOG.info(imgUrl);
-				//result = BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
-				LOG.info(String.format("save file:%s", result));
 			}
 			LOG.info("---------------------------------------");
 		}

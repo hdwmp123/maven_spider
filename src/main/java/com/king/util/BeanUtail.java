@@ -8,39 +8,67 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BeanUtail {
+	
+	static Logger LOG = BeanUtail.getLOG(BeanUtail.class);
+	
     public static <T> Logger getLOG(Class<T> clazz) {
         return LoggerFactory.getLogger(clazz);
     }
 
     public static boolean createDir(String path) {
         File dir = new File(path);
+        boolean result = false;
+        LOG.info(String.format("dir path:%s", path));
         if (!dir.exists()) {
-            return dir.mkdirs();
+            result = dir.mkdirs();
+            LOG.info(String.format("##create dir:%s##", result));
         } else {
-            return true;
+        	LOG.info("dir exists");
+        	result = true;
         }
+        
+        return result;
     }
+    /**
+     * 保存web文件(img)
+     * @param webUrl web文件地址
+     * @param saveDir 保存目录
+     * @param index 文件索引
+     * @return
+     */
     public static boolean saveWebFileT(final String webUrl,final String saveDir,final int index) {
-        Thread run = new Thread(new Runnable() {
+    	Runnable run = new Runnable() {
             @Override
             public void run() {
                 saveWebFile(webUrl, saveDir, index);
             }
-        });
-        run.run();
+        };
+        BeanUtail.runThread(run, "");
         return true;
     }
+    /**
+     * 保存web文件(img)
+     * @param webUrl web文件地址
+     * @param saveDir 保存目录
+     * @param index 文件索引
+     * @return
+     */
     public static boolean saveWebFile(final String webUrl,String saveDir,int index) {
+    	LOG.info(String.format("webUrl:%s", webUrl));
+    	LOG.info(String.format("saveDir:%s", saveDir));
         try {
             // new一个文件对象用来保存图片，默认保存当前工程根目录
             String fileName = index==-1 ? webUrl.substring(webUrl.lastIndexOf("/")) : index + ".jpg";
             File imageFile = new File(saveDir + fileName);
             if(imageFile.exists()){
+               LOG.info("file exists");
                return true;
             }
             // new一个URL对象
@@ -61,6 +89,7 @@ public class BeanUtail {
             outStream.write(data);
             // 关闭输出流
             outStream.close();
+            LOG.info("##save file success##");
             return true;
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -69,7 +98,12 @@ public class BeanUtail {
         }
         return false;
     }
-
+    /**
+     * 将数据流转换为byte数组
+     * @param inStream
+     * @return
+     * @throws IOException
+     */
     public static byte[] readInputStream(InputStream inStream)
             throws IOException {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -100,6 +134,11 @@ public class BeanUtail {
             return str != null;
         }
     }
+    /**
+     * 文件名纠错
+     * @param fileName
+     * @return
+     */
     public static String fixFileName(String fileName) {
         if (!checkStr(fileName)) {
             return null;
@@ -139,5 +178,25 @@ public class BeanUtail {
             fileName = new String(fileName.getBytes(), offset, limitSize);
         }
         return fileName;
+    }
+    /**
+     * 获取当前时间字符串 格式 yyyy-MM-dd HH:mm:ss
+     * 
+     * @return
+     */
+    public static String getCurrentTime() {
+        String time = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()).toString();
+        return time;
+    }
+    /**
+     * 启动新线程
+     * 
+     * @param runnable
+     */
+    public static void runThread(Runnable runnable, String message) {
+    	LOG.info(String.format("start启动新线程：%s,时间：%s", message, getCurrentTime()));
+        Thread thread = new Thread(runnable);
+        thread.start();
+        LOG.info(String.format("end启动新线程：%s,时间：%s", message, getCurrentTime()));
     }
 }
