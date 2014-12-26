@@ -14,9 +14,9 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BeanUtail {
+public class BeanUtil {
 	
-	static Logger LOG = BeanUtail.getLOG(BeanUtail.class);
+	static Logger LOG = BeanUtil.getLOG(BeanUtil.class);
 	
     public static <T> Logger getLOG(Class<T> clazz) {
         return LoggerFactory.getLogger(clazz);
@@ -50,7 +50,7 @@ public class BeanUtail {
                 saveWebFile(webUrl, saveDir, index);
             }
         };
-        BeanUtail.runThread(run, "");
+        BeanUtil.runThread(run, "");
         return true;
     }
     /**

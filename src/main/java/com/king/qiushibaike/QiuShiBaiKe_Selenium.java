@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 
-import com.king.util.BeanUtail;
+import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
@@ -20,7 +20,7 @@ import com.king.util.GlobalContext;
 * @version V1.0
  */
 public class QiuShiBaiKe_Selenium {
-	static Logger LOG = BeanUtail.getLOG(QiuShiBaiKe_Selenium.class);
+	static Logger LOG = BeanUtil.getLOG(QiuShiBaiKe_Selenium.class);
 	public static void main(String[] args) {
 		System.setProperty("webdriver.chrome.driver",GlobalContext.CHROME_DRIVER);
 		runWeb();
@@ -65,12 +65,12 @@ public class QiuShiBaiKe_Selenium {
 							author = authors.get(1).getText();
 						}
 						LOG.info(String.format("author:%s", author));
-						tempDir = dirBase + BeanUtail.fixFileName(author) + "/";
-						BeanUtail.createDir(tempDir);
-						BeanUtail.createDir(dirBaseAll);
+						tempDir = dirBase + BeanUtil.fixFileName(author) + "/";
+						BeanUtil.createDir(tempDir);
+						BeanUtil.createDir(dirBaseAll);
 						imgUrl =  imgs.get(0).getAttribute("src");
-						BeanUtail.saveWebFileT(imgUrl, tempDir, -1);
-						BeanUtail.saveWebFileT(imgUrl, dirBaseAll, -1);
+						BeanUtil.saveWebFileT(imgUrl, tempDir, -1);
+						BeanUtil.saveWebFileT(imgUrl, dirBaseAll, -1);
 					}
 				}
 				LOG.info("---------------------------------------");

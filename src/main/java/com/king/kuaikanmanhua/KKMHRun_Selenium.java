@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 
-import com.king.util.BeanUtail;
+import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
@@ -20,7 +20,7 @@ import com.king.util.GlobalContext;
 * @version V1.0
  */
 public class KKMHRun_Selenium {
-	static Logger LOG = BeanUtail.getLOG(KKMHRun_Selenium.class);
+	static Logger LOG = BeanUtil.getLOG(KKMHRun_Selenium.class);
 	public static void main(String[] args) {
 		System.setProperty("webdriver.chrome.driver",GlobalContext.CHROME_DRIVER);
 		runWeb();
@@ -51,8 +51,8 @@ public class KKMHRun_Selenium {
 			LOG.info(comic_name);
 			LOG.info(date);
 			LOG.info(author);
-			tempDir = dirBase + BeanUtail.fixFileName(topic_name) + "/" + BeanUtail.fixFileName(comic_name) + "/";
-			BeanUtail.createDir(tempDir) ;
+			tempDir = dirBase + BeanUtil.fixFileName(topic_name) + "/" + BeanUtil.fixFileName(comic_name) + "/";
+			BeanUtil.createDir(tempDir) ;
 			//
 			List<WebElement> imgs = driver.findElements(By.cssSelector(".comic-content > img"));
 			if (imgs == null) {
@@ -63,7 +63,7 @@ public class KKMHRun_Selenium {
 			int index = 1;
 			for (WebElement img : imgs) {
 				imgUrl = img.getAttribute("src");
-				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
 			}
 			LOG.info("---------------------------------------");

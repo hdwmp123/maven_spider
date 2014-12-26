@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 
-import com.king.util.BeanUtail;
+import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
@@ -20,7 +20,7 @@ import com.king.util.GlobalContext;
 * @version V1.0
  */
 public class QiuShiBaiKe_Jsoup {
-	static Logger LOG = BeanUtail.getLOG(QiuShiBaiKe_Jsoup.class);
+	static Logger LOG = BeanUtil.getLOG(QiuShiBaiKe_Jsoup.class);
 	public static void main(String[] args) {
 		try {
 			run();
@@ -53,10 +53,10 @@ public class QiuShiBaiKe_Jsoup {
 			for (Element div : divs) {
 				//
 				author = div.select("div.author > a").get(1).text();
-				tempDir = dirBase + BeanUtail.fixFileName(author) + "/";
-				BeanUtail.createDir(tempDir) ;
+				tempDir = dirBase + BeanUtil.fixFileName(author) + "/";
+				BeanUtil.createDir(tempDir) ;
 				imgUrl = div.select("img").get(1).attr("src");
-				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
 			}
 			LOG.info("---------------------------------------");

@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 
-import com.king.util.BeanUtail;
+import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
@@ -20,7 +20,7 @@ import com.king.util.GlobalContext;
 * @version V1.0
  */
 public class KKMHRun_Jsoup {
-	static Logger LOG = BeanUtail.getLOG(KKMHRun_Selenium.class);
+	static Logger LOG = BeanUtil.getLOG(KKMHRun_Selenium.class);
 	public static void main(String[] args) {
 		Runnable run = new Runnable() {
 			@Override
@@ -32,7 +32,7 @@ public class KKMHRun_Jsoup {
 				}
 			}
 		};
-		BeanUtail.runThread(run, "");
+		BeanUtil.runThread(run, "");
 			
 	}
 
@@ -61,8 +61,8 @@ public class KKMHRun_Jsoup {
 			LOG.info(comic_name);
 			LOG.info(date);
 			LOG.info(author);
-			tempDir = dirBase + BeanUtail.fixFileName(topic_name) + "/" + BeanUtail.fixFileName(comic_name) + "/";
-			BeanUtail.createDir(tempDir) ;
+			tempDir = dirBase + BeanUtil.fixFileName(topic_name) + "/" + BeanUtil.fixFileName(comic_name) + "/";
+			BeanUtil.createDir(tempDir) ;
 			//
 			Elements imgs = driver.select(".comic-content > img");
 			if (imgs == null) {
@@ -73,7 +73,7 @@ public class KKMHRun_Jsoup {
 			int index = 1;
 			for (Element img : imgs) {
 				imgUrl = img.attr("src");
-				BeanUtail.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
 				index ++;
 			}
 			LOG.info("---------------------------------------");
