@@ -56,7 +56,7 @@ public class QiuShiBaiKe_Jsoup {
 				tempDir = dirBase + BeanUtil.fixFileName(author) + "/";
 				BeanUtil.createDir(tempDir) ;
 				imgUrl = div.select("img").get(1).attr("src");
-				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index + "", "jpg");
 				index ++;
 			}
 			LOG.info("---------------------------------------");
