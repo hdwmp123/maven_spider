@@ -43,11 +43,11 @@ public class BeanUtil {
      * @param index 文件索引
      * @return
      */
-    public static boolean saveWebFileT(final String webUrl,final String saveDir,final int index) {
+    public static boolean saveWebFileT(final String webUrl,final String saveDir,final String index,final String suffix) {
     	Runnable run = new Runnable() {
             @Override
             public void run() {
-                saveWebFile(webUrl, saveDir, index);
+                saveWebFile(webUrl, saveDir, index,suffix);
             }
         };
         BeanUtil.runThread(run, "");
@@ -60,12 +60,16 @@ public class BeanUtil {
      * @param index 文件索引
      * @return
      */
-    public static boolean saveWebFile(final String webUrl,String saveDir,int index) {
-    	LOG.info(String.format("webUrl:%s", webUrl));
-    	LOG.info(String.format("saveDir:%s", saveDir));
+    public static boolean saveWebFile(final String webUrl,String saveDir,String index,String suffix) {
+    	//LOG.info(String.format("webUrl:%s", webUrl));
+    	//LOG.info(String.format("saveDir:%s", saveDir));
         try {
+        	File temp = new File(saveDir);
+        	if(!temp.exists()){
+        		temp.mkdirs();
+        	}
             // new一个文件对象用来保存图片，默认保存当前工程根目录
-            String fileName = index==-1 ? webUrl.substring(webUrl.lastIndexOf("/")) : index + ".jpg";
+            String fileName = index.equals("-1") ? webUrl.substring(webUrl.lastIndexOf("/")) : index + "." + suffix;
             File imageFile = new File(saveDir + fileName);
             if(imageFile.exists()){
                LOG.info("file exists");
@@ -75,6 +79,15 @@ public class BeanUtil {
             URL url = new URL(webUrl);
             // 打开链接
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            //
+            conn.setRequestProperty("Accept", "image/webp,*/*;q=0.8");
+            conn.setRequestProperty("Accept-Encoding", "gzip, deflate, sdch");
+            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4");
+            conn.setRequestProperty("Connection", "keep-alive");
+            // conn.setRequestProperty("Host", "www.ubbie.cn");
+            // conn.setRequestProperty("Referer", "http://www.ubabytv.com.cn/");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.91 Safari/537.36");
+            conn.setRequestProperty("Cookie", "PASSID=zgZ45y;UBI=fi_PncwhpxZ%7ETaJc6OTBQvaph6w6PqME6CXOqN67d5eOFI8EaRvEjQ4mJlhnsdGtW4II-jrA4bnn9eN3Jzr");
             // 设置请求方式为"GET"
             conn.setRequestMethod("GET");
             // 超时响应时间为5秒
@@ -83,18 +96,24 @@ public class BeanUtil {
             InputStream inStream = conn.getInputStream();
             // 得到图片的二进制数据，以二进制封装得到数据，具有通用性
             byte[] data = readInputStream(inStream);
+            if(data==null||data.length==0){
+            	LOG.info("##空##"+index);
+            	return false;
+            }
             // 创建输出流
             FileOutputStream outStream = new FileOutputStream(imageFile);
             // 写入数据
             outStream.write(data);
             // 关闭输出流
             outStream.close();
-            LOG.info("##save file success##");
+            LOG.info("##save file success##" + index);
             return true;
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	LOG.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	LOG.error(e.getMessage());
         }
         return false;
     }
@@ -194,9 +213,9 @@ public class BeanUtil {
      * @param runnable
      */
     public static void runThread(Runnable runnable, String message) {
-    	LOG.info(String.format("start启动新线程：%s,时间：%s", message, getCurrentTime()));
+    	//LOG.info(String.format("start启动新线程：%s,时间：%s", message, getCurrentTime()));
         Thread thread = new Thread(runnable);
         thread.start();
-        LOG.info(String.format("end启动新线程：%s,时间：%s", message, getCurrentTime()));
+        //LOG.info(String.format("end启动新线程：%s,时间：%s", message, getCurrentTime()));
     }
 }

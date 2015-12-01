@@ -63,7 +63,7 @@ public class KKMHRun_Selenium {
 			int index = 1;
 			for (WebElement img : imgs) {
 				imgUrl = img.getAttribute("src");
-				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index + "", "jpg");
 				index ++;
 			}
 			LOG.info("---------------------------------------");

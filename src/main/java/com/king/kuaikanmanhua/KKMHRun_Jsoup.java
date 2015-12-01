@@ -20,7 +20,7 @@ import com.king.util.GlobalContext;
 * @version V1.0
  */
 public class KKMHRun_Jsoup {
-	static Logger LOG = BeanUtil.getLOG(KKMHRun_Selenium.class);
+	static Logger LOG = BeanUtil.getLOG(KKMHRun_Jsoup.class);
 	public static void main(String[] args) {
 		Runnable run = new Runnable() {
 			@Override
@@ -73,7 +73,7 @@ public class KKMHRun_Jsoup {
 			int index = 1;
 			for (Element img : imgs) {
 				imgUrl = img.attr("src");
-				BeanUtil.saveWebFileT(imgUrl, tempDir, index);
+				BeanUtil.saveWebFileT(imgUrl, tempDir, index + "", "jpg");
 				index ++;
 			}
 			LOG.info("---------------------------------------");

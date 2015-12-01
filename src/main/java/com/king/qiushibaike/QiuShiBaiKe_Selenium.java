@@ -30,14 +30,14 @@ public class QiuShiBaiKe_Selenium {
 		WebDriver driver = new ChromeDriver();
 		int pageIndex = 1;
 		String[] urls = new String[]{
-				//"http://www.qiushibaike.com/8hr/page/%s",//热门
-				//"http://www.qiushibaike.com/hot/page/%s",//24小时内
-				//"http://www.qiushibaike.com/week/page/%s",//7天内
-				//"http://www.qiushibaike.com/month/page/%s",//30天内
+				"http://www.qiushibaike.com/8hr/page/%s",//热门
+				"http://www.qiushibaike.com/hot/page/%s",//24小时内
+				"http://www.qiushibaike.com/week/page/%s",//7天内
+				"http://www.qiushibaike.com/month/page/%s",//30天内
 				"http://www.qiushibaike.com/imgrank/page/%s",//真相-硬菜
 				"http://www.qiushibaike.com/pic/page/%s",//真相-时令
-				//"http://www.qiushibaike.com/late/page/%s",//最新
-				//"http://www.qiushibaike.com/history/page/%s",//穿越
+				"http://www.qiushibaike.com/late/page/%s",//最新
+				"http://www.qiushibaike.com/history/page/%s",//穿越
 		};
 		int divCount = 0;
 		String author = null;
@@ -69,8 +69,8 @@ public class QiuShiBaiKe_Selenium {
 						BeanUtil.createDir(tempDir);
 						BeanUtil.createDir(dirBaseAll);
 						imgUrl =  imgs.get(0).getAttribute("src");
-						BeanUtil.saveWebFileT(imgUrl, tempDir, -1);
-						BeanUtil.saveWebFileT(imgUrl, dirBaseAll, -1);
+						BeanUtil.saveWebFileT(imgUrl, tempDir, "1", "jpg");
+						BeanUtil.saveWebFileT(imgUrl, dirBaseAll, "-1", "jpg");
 					}
 				}
 				LOG.info("---------------------------------------");
