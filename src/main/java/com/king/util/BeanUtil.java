@@ -218,4 +218,21 @@ public class BeanUtil {
         thread.start();
         //LOG.info(String.format("end启动新线程：%s,时间：%s", message, getCurrentTime()));
     }
+    //
+    public static boolean saveTxtFile(final String text,String saveDir,String index,String suffix) {
+        String fileName = index.equals("-1") ? "1" : index + "." + suffix;
+        File imageFile = new File(saveDir + fileName);
+        if(imageFile.exists()){
+           LOG.info("file exists");
+           return true;
+        }
+        try {
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            outputStream.write(text.getBytes());
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }

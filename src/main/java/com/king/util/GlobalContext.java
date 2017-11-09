@@ -7,4 +7,5 @@ public class GlobalContext {
 	public static String DIR_QIU_SHI_BAI_KE = "E:/Spider/QiuShiBaiKe/";
 	public static String DIR_QIU_SHI_BAI_KE_ALL = "E:/Spider/QiuShiBaiKe_ALL/";
 	public static String DIR_YOU_BI = "E:/Spider/YouBi/";
+	public static String DIR_YI_LI_TE = "E:/Spider/YiLiTe/";
 }

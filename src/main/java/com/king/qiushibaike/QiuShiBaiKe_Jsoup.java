@@ -32,7 +32,7 @@ public class QiuShiBaiKe_Jsoup {
 	private static void run() throws IOException {
 		Document  driver = null;
 		int pageIndex = 1;
-		String url = "http://www.qiushibaike.com/8hr/page/%s";
+		String url = "http://www.qiushibaike.com/hot/page/%s";
 		int divCount = 0;
 		String author = null;
 		String imgUrl = null;

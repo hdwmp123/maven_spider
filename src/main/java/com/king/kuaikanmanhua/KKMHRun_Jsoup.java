@@ -12,7 +12,7 @@ import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
-* @Title: KKMHRun_Jsoup.java 
+* @Title: YLTRun_Jsoup.java 
 * @Package com.king.kuaikanmanhua 
 * @Description: 速度快
 * @author hdwmp123@163.com
