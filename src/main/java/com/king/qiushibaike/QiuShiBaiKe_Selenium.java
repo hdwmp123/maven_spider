@@ -12,7 +12,7 @@ import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
-* @Title: QiuShiBaiKe_Selenium.java 
+* @Title: BDIMGRun_Selenium.java 
 * @Package com.king.qiushibaike 
 * @Description: 此方式可解决请求响应为移动端问题
 * @author hdwmp123@163.com
@@ -30,14 +30,14 @@ public class QiuShiBaiKe_Selenium {
 		WebDriver driver = new ChromeDriver();
 		int pageIndex = 1;
 		String[] urls = new String[]{
-				"http://www.qiushibaike.com/8hr/page/%s",//热门
-				"http://www.qiushibaike.com/hot/page/%s",//24小时内
-				"http://www.qiushibaike.com/week/page/%s",//7天内
-				"http://www.qiushibaike.com/month/page/%s",//30天内
-				"http://www.qiushibaike.com/imgrank/page/%s",//真相-硬菜
-				"http://www.qiushibaike.com/pic/page/%s",//真相-时令
-				"http://www.qiushibaike.com/late/page/%s",//最新
-				"http://www.qiushibaike.com/history/page/%s",//穿越
+				"https://www.qiushibaike.com/8hr/page/%s",//热门
+				"https://www.qiushibaike.com/hot/page/%s",//24小时内
+				"https://www.qiushibaike.com/week/page/%s",//7天内
+				"https://www.qiushibaike.com/month/page/%s",//30天内
+				"https://www.qiushibaike.com/imgrank/page/%s",//真相-硬菜
+				"https://www.qiushibaike.com/pic/page/%s",//真相-时令
+				"https://www.qiushibaike.com/late/page/%s",//最新
+				"https://www.qiushibaike.com/history/page/%s",//穿越
 		};
 		int divCount = 0;
 		String author = null;

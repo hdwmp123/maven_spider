@@ -69,7 +69,9 @@ public class BeanUtil {
         		temp.mkdirs();
         	}
             // new一个文件对象用来保存图片，默认保存当前工程根目录
-            String fileName = index.equals("-1") ? webUrl.substring(webUrl.lastIndexOf("/")) : index + "." + suffix;
+        	int a = webUrl.lastIndexOf("/");
+        	int b = webUrl.lastIndexOf("%2F") + 3;
+            String fileName = index.equals("-1") ? webUrl.substring(a>b?a:b) : index + "." + suffix;
             File imageFile = new File(saveDir + fileName);
             if(imageFile.exists()){
                LOG.info("file exists");

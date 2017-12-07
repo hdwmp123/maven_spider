@@ -13,7 +13,7 @@ import com.king.util.GlobalContext;
 
 /**
  * 
- * @Title: BDTBRun_Jsoup.java
+ * @Title: BDIMGRun_Jsoup.java
  * @Package com.king.baiduteba
  * @Description: 百度贴吧爬图
  * @author hdwmp123@163.com
