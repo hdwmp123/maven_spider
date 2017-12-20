@@ -1,6 +1,6 @@
 package com.king.baiduimg;
 
-import java.util.List;
+import java.io.File;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,33 +23,72 @@ import com.king.util.GlobalContext;
 public class BDIMGRun_Selenium {
     static Logger LOG = BeanUtil.getLOG(BDIMGRun_Selenium.class);
 
+    static String[] filenames = { "灰头麦鸡", "燕子", "燕鸥", "牛背鹭", "环颈雉", "琵嘴鸭", "白琵鹭", "白眼潜鸭", "白腰草鹬", "白骨顶", "矶鹬", "红嘴鸥",
+            "红腹滨鹬", "绿头鸭", "绿鹭", "翘鼻麻鸭", "苍鹭", "豆雁", "赤膀鸭", "赤颈鸭", "赤麻鸭", "遗鸥", "金斑鸻", "金眶鸻", "针尾沙锥", "针尾鸭", "银鸥",
+            "长嘴剑鸻", "须浮鸥", "鸳鸯", "鹊鸭", "鹤鹬", "黑水鸡", "黑鹳" };
+    static String[] filenames2 = {"牛背鹭"};
+
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", GlobalContext.CHROME_DRIVER);
         runWeb();
     }
 
     private static void runWeb() {
-        WebDriver driver = new ChromeDriver();
-        String url = "https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E9%BB%91%E7%BF%85%E9%95%BF%E8%84%9A%E9%B9%AC&step_word=&hs=0&pn=0&spn=2&di=3463812600&pi=0&rn=1&tn=baiduimagedetail&is=4118912903%2C1400194148&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=3182610698%2C4264073662&os=3421364060%2C814686414&simid=0%2C0&adpicid=0&lpn=0&ln=1988&fr=&fmq=1512286281562_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&ist=&jit=&cg=&bdtype=17&oriquery=&objurl=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fd833c895d143ad4b8c75f62e88025aafa50f0680.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fijw1stgj_z%26e3Bkwt17_z%26e3Bv54AzdH3FvfAzdH3Fjc0u9caua9bmk9bwndc9jljjm0bllkj9&gsm=0&rpstart=0&rpnum=0";
-        String imgUrl = null;
-        //
-        String dirBaseAll = GlobalContext.DIR_BAIDU_IMG;
-        driver.get(url);
+        String dirBase = GlobalContext.DIR_BAIDU_IMG;
+        for (String folderName : filenames2) {
+            LOG.info("-------------------开始下载：" + folderName + "--------------------");
+            WebDriver driver = new ChromeDriver();
+            try {
+                openPage(folderName, driver);
+                String imgUrl = null;
+                WebElement next = null;
+                for (int i = 0; i < 500; i++) {
+                    imgUrl = getImgUrl(driver);
+                    BeanUtil.saveWebFileT(imgUrl, dirBase + File.separator + folderName + File.separator,
+                            String.valueOf(i), "jpg");
+                    next = driver.findElement(By.cssSelector(".img-next"));
+                    next.click();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                LOG.info("-------------------结束下载：" + folderName + "--------------------");
+                driver.quit();
+            } catch (Exception e) {
+
+            } finally {
+                driver.quit();
+            }
+        }
+    }
+
+    private static void openPage(String foldName, WebDriver driver) {
+        String url = "https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=result&fr=&sf=1&fmq=1512700026542_R&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=%s";
+        driver.get(String.format(url, foldName));
         //
         try {
             Thread.sleep(500 * 3);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        List<WebElement> divs = driver.findElements(By.cssSelector("div.img-box > img"));
-        for (WebElement div : divs) {
-            BeanUtil.createDir(dirBaseAll);
-            imgUrl = div.getAttribute("src");
-            System.err.println(imgUrl);
-            BeanUtil.saveWebFileT(imgUrl, dirBaseAll, "-1", "jpg");
+
+        WebElement a = driver.findElements(By.className("imgitem")).get(0).findElement(By.tagName("a"));
+        driver.get(a.getAttribute("href"));
+        try {
+            Thread.sleep(500 * 3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        LOG.info("---------------------------------------");
-        driver.quit();
+    }
+
+    private static String getImgUrl(WebDriver driver) {
+        String imgUrl;
+        WebElement srcPic = driver.findElement(By.id("srcPic"));
+        WebElement img = srcPic.findElement(By.tagName("img"));
+        imgUrl = img.getAttribute("src");
+        return imgUrl;
     }
 
 }
