@@ -12,7 +12,7 @@ import com.king.util.BeanUtil;
 import com.king.util.GlobalContext;
 /**
  * 
-* @Title: BDIMGRun_Selenium.java 
+* @Title: UUMTIMGRun_Selenium.java 
 * @Package com.king.qiushibaike 
 * @Description: 此方式可解决请求响应为移动端问题
 * @author hdwmp123@163.com

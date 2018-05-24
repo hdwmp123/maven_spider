@@ -13,7 +13,7 @@ import com.king.util.GlobalContext;
 
 /**
  * 
- * @Title: BDIMGRun_Selenium.java
+ * @Title: UUMTIMGRun_Selenium.java
  * @Package com.king.qiushibaike
  * @Description: 此方式可解决请求响应为移动端问题
  * @author hdwmp123@163.com
@@ -26,7 +26,7 @@ public class BDIMGRun_Selenium {
     static String[] filenames = { "灰头麦鸡", "燕子", "燕鸥", "牛背鹭", "环颈雉", "琵嘴鸭", "白琵鹭", "白眼潜鸭", "白腰草鹬", "白骨顶", "矶鹬", "红嘴鸥",
             "红腹滨鹬", "绿头鸭", "绿鹭", "翘鼻麻鸭", "苍鹭", "豆雁", "赤膀鸭", "赤颈鸭", "赤麻鸭", "遗鸥", "金斑鸻", "金眶鸻", "针尾沙锥", "针尾鸭", "银鸥",
             "长嘴剑鸻", "须浮鸥", "鸳鸯", "鹊鸭", "鹤鹬", "黑水鸡", "黑鹳" };
-    static String[] filenames2 = {"牛背鹭"};
+    static String[] filenames2 = {"黑水鸡"};
 
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", GlobalContext.CHROME_DRIVER);
