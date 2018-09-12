@@ -12,4 +12,5 @@ public class GlobalContext {
 	public static String DIR_YOU_BI = "E:/Spider/YouBi/";
 	public static String DIR_YI_LI_TE = "E:/Spider/YiLiTe/";
 	public static String DIR_GDGX = "E:/Spider/GDGX/";
+	public static String DIR_YUAN_MING_YUAN = "E:/Spider/YUAN_MING_YUAN/";
 }
