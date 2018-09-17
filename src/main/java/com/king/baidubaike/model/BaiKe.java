@@ -1,5 +1,7 @@
 package com.king.baidubaike.model;
 
+import org.nutz.dao.entity.annotation.ColDefine;
+import org.nutz.dao.entity.annotation.ColType;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Next;
 import org.nutz.dao.entity.annotation.Table;
@@ -10,6 +12,7 @@ public class BaiKe {
     @Next
     private Long id;
     private String name;// 名称
+    @ColDefine(type = ColType.TEXT)
     private String summary;// '简介';
     private String chinese_name;// '中文学名';
     private String latin_name;// '拉丁学名';
@@ -26,6 +29,7 @@ public class BaiKe {
     private String distribution_area;// '分布区域';
     private String nanmed_and_chronicle;// '命名者及年代';
     private String english_name;// '英文名称';
+    @ColDefine(width = 1024)
     private String image;// 图片地址以##分割
 
     public Long getId() {
